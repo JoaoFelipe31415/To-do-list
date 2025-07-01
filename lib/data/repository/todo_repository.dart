@@ -1,9 +1,13 @@
+import 'dart:async';
+
 import 'package:result_dart/result_dart.dart';
 import 'package:to_do/domain/dtos/todo_dto.dart';
 import 'package:to_do/domain/models/todo_model.dart';
 
 class TodoRepository {
   final List<TodoModel> _todos = [];
+  final _controller = StreamController<List<TodoModel>>.broadcast();
+  Stream<List<TodoModel>> get todoRepositoryStream => _controller.stream;
 
   Result<List<TodoModel>> getTodos() {
     final copy = _todos.sublist(0);
@@ -17,6 +21,7 @@ class TodoRepository {
       completed: dto.completed,
     );
     _todos.add(todo);
+    _controller.add(_todos);
     return Success.unit();
   }
 
@@ -26,6 +31,7 @@ class TodoRepository {
       return Failure(Exception("Erro ao criar o TODO"));
     }
     final todo = _todos[index];
+    _controller.add(_todos);
     return todo.toSuccess();
   }
 
@@ -37,6 +43,7 @@ class TodoRepository {
     final todo = TodoModel(id: id, title: dto.title, completed: dto.completed);
     _todos.removeAt(index);
     _todos.add(todo);
+    _controller.add(_todos);
     return Success.unit();
   }
 
@@ -46,6 +53,7 @@ class TodoRepository {
       return Failure(Exception("Erro ao deletar o TODO"));
     }
     _todos.removeAt(index);
+    _controller.add(_todos);
     return Success.unit();
   }
 }

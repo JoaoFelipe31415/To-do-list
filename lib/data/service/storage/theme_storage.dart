@@ -6,11 +6,11 @@ class ThemeStorage {
 
   const ThemeStorage(this._localStorage);
 
-  AsyncResult<bool> isDark() async {
+  AsyncResult<bool> isDark() {
     return _localStorage.read<bool>('theme');
   }
 
-  AsyncResult<Unit> saveTheme(bool theme) {
+  AsyncResult<bool> saveTheme(bool theme) {
     return _localStorage.write<bool>('theme', theme);
   }
 }

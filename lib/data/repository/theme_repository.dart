@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:result_dart/result_dart.dart';
 import 'package:to_do/data/service/storage/theme_storage.dart';
 
@@ -16,22 +15,17 @@ class ThemeRepository {
   AsyncResult<Unit> loadTheme() async {
     return await _themeStorage
         .isDark()
-        .flatMap((success) {
-          _theme = success;
-          _streamController.add(_theme);
-          return Success.unit();
-        })
-        .onFailure((failure) {
-          _theme = false;
-          _streamController.add(_theme);
-        });
+        .flatMap(_toggleTheme)
+        .onFailure((failure) => _theme = false);
   }
 
-  AsyncResult<Unit> saveTheme(bool theme) {
-    return _themeStorage.saveTheme(theme).flatMap((success) {
-      _theme = theme;
-      _streamController.add(theme);
-      return Success.unit();
-    });
+  AsyncResult<Unit> toggleTheme(bool theme) {
+    return _themeStorage.saveTheme(theme).flatMap(_toggleTheme);
+  }
+
+  Result<Unit> _toggleTheme(bool success) {
+    _theme = success;
+    _streamController.add(theme);
+    return Success.unit();
   }
 }

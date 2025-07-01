@@ -5,18 +5,20 @@ import 'package:to_do/data/repository/todo_repository.dart';
 import 'package:to_do/data/service/storage/localStorage/local_storage.dart';
 import 'package:to_do/data/service/storage/theme_storage.dart';
 import 'package:to_do/ui/home/home_viewmodel.dart';
-import 'package:to_do/ui/main/main_viewmodel.dart';
+import 'package:to_do/ui/app_widget/app_widget_viewmodel.dart';
 
 final injector = AutoInjector();
 
-void setup() async {
+Future<void> setup() async {
   injector.addInstance<SharedPreferencesAsync>(SharedPreferencesAsync());
   injector.add<ThemeStorage>(ThemeStorage.new);
   injector.addSingleton<ThemeRepository>(ThemeRepository.new);
   injector.addSingleton<LocalStorage>(LocalStorage.new);
   injector.addSingleton<TodoRepository>(TodoRepository.new);
   injector.add<HomeViewmodel>(HomeViewmodel.new);
-  injector.add<MainViewmodel>(MainViewmodel.new);
+  injector.add<AppWidgetViewmodel>(AppWidgetViewmodel.new);
 
   injector.commit();
+
+  await injector.get<ThemeRepository>().loadTheme();
 }

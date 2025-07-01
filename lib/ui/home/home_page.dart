@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:result_command/result_command.dart';
-import 'package:to_do/config/dependencies.dart';
+import 'package:to_do/config/config.dart';
 import 'package:to_do/ui/home/home_viewmodel.dart';
 import 'package:to_do/ui/home/widgets/create_bar_widget.dart';
 import 'package:to_do/ui/home/widgets/todo_card_widget.dart';

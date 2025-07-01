@@ -8,7 +8,7 @@ class LocalStorage {
 
   AsyncResult<T> read<T extends Object>(String key) async {
     try {
-      late final Object? value;
+      Object? value;
       if (T == String) {
         value = await _service.getString(key);
       } else if (T == int) {
@@ -31,7 +31,7 @@ class LocalStorage {
     }
   }
 
-  AsyncResult<Unit> write<T extends Object>(String key, T data) async {
+  AsyncResult<bool> write<T extends Object>(String key, T data) async {
     try {
       if (T == String) {
         await _service.setString(key, data as String);
@@ -44,7 +44,7 @@ class LocalStorage {
       } else {
         return Failure(Exception('Unsupported type: $T'));
       }
-      return Success.unit();
+      return Success(true);
     } catch (e) {
       return Failure(Exception('An error occurred: $e'));
     }
