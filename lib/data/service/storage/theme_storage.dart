@@ -6,7 +6,7 @@ class ThemeStorage {
 
   const ThemeStorage(this._localStorage);
 
-  AsyncResult<bool> isDark() {
+  AsyncResult<bool> getTheme() {
     return _localStorage.read<bool>('theme');
   }
 

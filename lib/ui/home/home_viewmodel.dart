@@ -56,7 +56,8 @@ class HomeViewmodel extends ChangeNotifier {
   }
 
   void changeTheme() {
-    _themeRepository.toggleTheme(!theme);
+    final x = !theme;
+    _themeRepository.toggleTheme(x);
   }
 
   void _loadTodos(List<TodoModel> todos) {

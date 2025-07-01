@@ -12,9 +12,9 @@ class ThemeRepository {
 
   ThemeRepository(this._themeStorage);
 
-  AsyncResult<Unit> loadTheme() async {
-    return await _themeStorage
-        .isDark()
+  AsyncResult<Unit> loadTheme() {
+    return _themeStorage
+        .getTheme()
         .flatMap(_toggleTheme)
         .onFailure((failure) => _theme = false);
   }
